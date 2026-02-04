@@ -79,17 +79,35 @@ if uploaded_file is not None:
     df["num"] = df["num"].apply(lambda x: 1 if x > 0 else 0)
 
     X = df.drop("num", axis=1)
-    y = df["num"]
+y = df["num"]
 
-    # Encode categorical columns
-    categorical_cols = X.select_dtypes(include=["object", "bool"]).columns
-    X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
+# -------------------------------
+# Handle missing values (IMPORTANT)
+# -------------------------------
 
-    # Align columns with training data
-    X = X.reindex(columns=trained_columns, fill_value=0)
+# Numeric columns
+numeric_cols = X.select_dtypes(include=["int64", "float64"]).columns
+X[numeric_cols] = X[numeric_cols].fillna(X[numeric_cols].median())
 
-    # Scale features
-    X_scaled = scaler.transform(X)
+# Categorical columns
+categorical_cols = X.select_dtypes(include=["object", "bool"]).columns
+for col in categorical_cols:
+    X[col] = X[col].fillna(X[col].mode()[0])
+
+# -------------------------------
+# Encode categorical columns
+# -------------------------------
+X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
+
+# Safety: remove any remaining NaNs
+X = X.fillna(0)
+
+# Align with training columns
+X = X.reindex(columns=trained_columns, fill_value=0)
+
+# Scale features
+X_scaled = scaler.transform(X)
+
 
     # -------------------------------
     # Model Selection
@@ -155,3 +173,4 @@ if uploaded_file is not None:
         st.subheader("📑 Classification Report")
         report = classification_report(y, y_pred, output_dict=False)
         st.text(report)
+
