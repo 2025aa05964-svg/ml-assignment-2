@@ -29,11 +29,11 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 st.title("❤️ Heart Disease Prediction App")
 st.write("Upload test data, select a model, and view performance metrics.")
 
+# -------------------------------
 # Sample dataset download
+# -------------------------------
 st.subheader("📥 Download Sample Dataset")
-
-# Sample dataset download
-st.subheader("📥 Download Sample Dataset")
+st.info("Use this file if you don't have test data.")
 
 sample_df = pd.read_csv("data/heart_sample.csv")
 
@@ -45,6 +45,7 @@ st.download_button(
     file_name="heart_disease_sample.csv",
     mime="text/csv",
 )
+
 # -------------------------------
 # Load Saved Artifacts
 # -------------------------------
@@ -164,6 +165,7 @@ if uploaded_file is not None:
         # -------------------------------
         st.subheader("📑 Classification Report")
         st.text(classification_report(y, y_pred))
+
 
 
 
