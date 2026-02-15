@@ -29,6 +29,24 @@ st.set_page_config(page_title="Heart Disease Prediction", layout="wide")
 st.title("❤️ Heart Disease Prediction App")
 st.write("Upload test data, select a model, and view performance metrics.")
 
+# Sample dataset download
+st.subheader("📥 Download Sample Dataset")
+
+@st.cache_data
+def get_sample_data():
+    return pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/heart.csv")
+
+sample_df = get_sample_data()
+
+csv = sample_df.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    label="Download Heart Disease CSV",
+    data=csv,
+    file_name="heart_disease_sample.csv",
+    mime="text/csv",
+)
+
 # -------------------------------
 # Load Saved Artifacts
 # -------------------------------
@@ -148,3 +166,4 @@ if uploaded_file is not None:
         # -------------------------------
         st.subheader("📑 Classification Report")
         st.text(classification_report(y, y_pred))
+
