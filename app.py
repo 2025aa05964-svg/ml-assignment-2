@@ -35,7 +35,8 @@ st.write("Upload test data, select a model, and view performance metrics.")
 st.subheader("📥 Download Sample Dataset")
 st.info("Use this file if you don't have test data.")
 
-sample_df = pd.read_csv("data/heart_sample.csv")
+sample_df = pd.read_csv("heart.csv")
+
 
 csv = sample_df.to_csv(index=False).encode("utf-8")
 
@@ -165,6 +166,7 @@ if uploaded_file is not None:
         # -------------------------------
         st.subheader("📑 Classification Report")
         st.text(classification_report(y, y_pred))
+
 
 
 
