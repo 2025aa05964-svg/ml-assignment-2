@@ -45,19 +45,6 @@ st.download_button(
     file_name="heart_disease_sample.csv",
     mime="text/csv",
 )
-
-
-sample_df = get_sample_data()
-
-csv = sample_df.to_csv(index=False).encode("utf-8")
-
-st.download_button(
-    label="Download Heart Disease CSV",
-    data=csv,
-    file_name="heart_disease_sample.csv",
-    mime="text/csv",
-)
-
 # -------------------------------
 # Load Saved Artifacts
 # -------------------------------
@@ -177,5 +164,6 @@ if uploaded_file is not None:
         # -------------------------------
         st.subheader("📑 Classification Report")
         st.text(classification_report(y, y_pred))
+
 
 
