@@ -77,6 +77,9 @@ The deployed web application allows users to:
 - Display classification report  
 
 ---
+## Reproducibility
+Model training, preprocessing, and artifact generation are implemented in train_models.py. 
+This script can be executed to regenerate all saved models and scalers.
 
 ## 🚀 Deployment
 The application is deployed using **Streamlit Community Cloud** and is accessible via the link provided in the assignment submission.
